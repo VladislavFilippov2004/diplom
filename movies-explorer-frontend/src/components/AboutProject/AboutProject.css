@@ -1,0 +1,104 @@
+.project-info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 70px;
+    margin-right: 70px;
+
+}
+.project-info__main-text {
+    display: flex;
+    flex-direction: row;
+    margin-top: 70px;
+    gap: 40px;
+}
+.project-info__text-title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: normal;
+    margin-bottom: 26px;
+}
+.project-info__text-description {
+    margin-bottom: 60px;
+}
+.project-info__work-line {
+    display: flex;
+    height: min-content;
+    margin-bottom: 12px;
+}
+.project-info__green-box {
+    height: 35px;
+    display: flex;
+    width: 20%;
+    background-color: #2BE080;
+    font-size: 14px;
+    line-height: 16px;
+    align-items: center;
+    justify-content: center;
+}
+.project-info__grey-box {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    background-color: #f2f2f2;
+}
+.project-info__work-line_titles {
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 400;
+    color: #A0A0A0;
+}
+.project-info__backend-title {
+    font-size: 11px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: min-content;
+    margin: 0;
+
+}
+.project-info__frontend-title {
+    font-size: 11px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 0;
+}
+
+@media screen and (max-width: 775px) {
+    .project-info {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+}
+@media screen and (max-width:440px) {
+    .project-info__main-text {
+        flex-direction: column;
+    }
+    .project-info__green-box {
+        font-size: 10px;
+        line-height: 13px;
+    }
+    .project-info__grey-box {
+        font-size: 10px;
+        line-height: 13px;
+    }
+    .project-info {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .project-info__text-description {
+        font-size: 11px;
+        line-height: 16px;
+    }
+    .project-info__text-title {
+        font-size: 18px;
+        line-height: 20px;
+    }
+}

@@ -1,0 +1,33 @@
+.navigation {
+    /* margin-top:auto; */
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    /* border: 3px solid black; */
+}
+.navigation__box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 35px;
+    border-radius: 8px;
+    background-color: black;
+    
+}
+.navigation__link {
+    display: block;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 363px){
+    .navigation__box {
+        width: 80px;
+        height: 25px;
+    }
+}

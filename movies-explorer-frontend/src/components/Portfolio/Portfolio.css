@@ -1,0 +1,73 @@
+.portfolio {
+    display: flex;
+    flex-direction: column;
+    margin-left: 80px;
+    margin-right: 80px;
+}
+.portfolio__personal-info {
+    display: flex;
+    margin-top: 65px;
+    margin-bottom: 100px;
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.portfolio__personal-info_text-content {
+    display: flex;
+    flex-direction: column;
+    width: 52%;
+}
+.portfolio__personal-info_name {
+    font-size: 50px;
+    line-height: 58px;
+    font-weight: 400;
+    margin: 0 0 18px;
+    /* width: 100%; */
+}
+.portfolio__personal-info_age {
+    font-weight: 400;
+    margin: 0 0 26px;
+    font-size: 18px;
+    line-height: 20px;
+}
+.portfolio__personal-info_hobbies {
+    margin: 0;
+}
+.portfolio__personal-info_social-network {
+    margin-top: 120px;
+    display: flex;
+    flex-direction: row;
+    font-weight: 500;
+    gap: 10px;
+}
+.portfolio__works_example {
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-top: 0;
+}
+.portfolio__works_title {
+    font-size: 18px;
+    line-height: 20px;
+    color: #a0a0a0;
+    font-weight: 400;
+    margin-bottom: 50px;
+}
+@media screen and (max-width: 690px) {
+    .portfolio__personal-info {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .portfolio__personal-info_picture {
+        margin-bottom: 40px;
+    }
+    .portfolio__personal-info_text-content {
+        width: 100%;
+    }
+    .portfolio__personal-info_name {
+        width: 292px;
+    }
+    .portfolio {
+        margin-left: 14px;
+        margin-right: 14px;
+    }
+}

@@ -1,0 +1,103 @@
+.search-form {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center;
+    justify-content: center; */
+    width: 100%;
+    margin: auto;
+    /* border: 1px solid red; */
+}
+.search-form__content {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    margin-left: 70px;
+    margin-right: 70px;
+    align-items: flex-start;
+    border-bottom: 1px solid #e8e8e8;
+}
+.search-form__input {
+    width: 90%;
+    border: 0;
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 500;
+    margin: 0;
+}
+.search-form__input::-moz-placeholder {
+    color: #999999;
+    text-align: center;
+}
+.search-form__input:-ms-input-placeholder {
+    color: #999999;
+    text-align: center;
+}
+.search-form__input::-webkit-input-placeholder {
+    color: #999999;
+    text-align: center;
+}
+.search-form__button-magnifier {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    align-content: center;
+    background-color: white;
+    width: 46px;
+    height: 46px;
+    /* background-image: url(../../images/magnifier.svg); */
+    margin-right: 10px;
+}
+.search-form__button-find {
+    width: 59px;
+    height: 34px;
+    border-radius: 48px;
+    background-color: #3456F3;
+    font-size: 11px;
+    line-height: 18px;
+    font-weight: 500;
+    border: 0px;
+    color: white;
+}
+.search-form__checkbox {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    /* border: 1px solid orange; */
+    margin: 30px auto 0;
+}
+
+.search-form__checkbox_button {
+    width: 36px;
+    height: 20px;
+    border: 0;
+    background-color: white;
+    margin: 0 0 70px;
+    /* background-image: url(../../images/switchon.svg); */
+}
+.search-form__checkbox_text {
+    margin: 0;
+}
+@media screen and (max-width: 770px) {
+    .search-form__content {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+    .search-form__checkbox_button {
+        margin: 0 0 60px;
+    }
+}
+@media screen and (max-width: 320px) {
+    .search-form__checkbox {
+        margin: 40px auto 0;
+    }
+
+    .search-form__checkbox_button {
+        margin: 0 0 50px;
+    }
+    .search-form__content {
+        margin-left: 14px;
+        margin-right: 14px;
+    }
+}
