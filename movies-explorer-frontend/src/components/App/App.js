@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import {useHistory} from 'react-router-dom'
 import './App.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import Header from '../Header/Header.js';
@@ -11,12 +12,14 @@ import Movies from '../Movies/Movies.js';
 import SavedMovies from '../SavedMovies/SavedMovies.js';
 import BurgerMenu from '../BurgerMenu/BurgerMenu.js';
 import PageNotFound from '../PageNotFound/PageNotFound.js';
+import auth from '../../utils/auth.js';
 import '../../index.css';
 import { Route, Switch } from 'react-router';
 import moviesApiInstance from '../../utils/MoviesApi';
 import constants from '../../utils/constants';
 
 function App() {
+  const history = useHistory();
   const [currentUser, setCurrentUser] = React.useState({});
   const [allMovies, setAllMovies] = React.useState([]);
   const [isBurgerMenuOpen, setBurgerMenu] = React.useState(false);
@@ -27,6 +30,21 @@ function App() {
 
   function closeBurgerMenu() {
     setBurgerMenu(false)
+  }
+  function handleRegister(email, password, name) {
+    auth.register(email, password, name )
+    .then((res) => {
+      try {
+        if (res.staus === 200) {
+          history.push('/movies')
+        }
+        else {
+          console.log('Не получилось зарегать')
+        }
+      } catch(err) {
+        console.log('Всё прям плохо', err)
+      }
+    })
   }
 
   React.useEffect(() => {
@@ -51,7 +69,7 @@ console.log('allMovies', allMovies)
             <Login></Login>
           </Route>
           <Route path='/signup'>
-            <Register></Register>
+            <Register onRegister={handleRegister}></Register>
           </Route>
           <Route path='/profile'>
             <Header></Header>
@@ -66,6 +84,7 @@ console.log('allMovies', allMovies)
             <Header></Header>
             <SavedMovies></SavedMovies>
             <Footer></Footer>
+
           </Route>
           <Route path='*'>
             <PageNotFound></PageNotFound>
