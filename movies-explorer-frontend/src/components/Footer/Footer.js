@@ -1,4 +1,5 @@
 function Footer () {
+    console.log('hhhh')
     return (
         <footer className='footer'>
             <p className='footer__title'>Учебный проект Яндекс.Практикум х BeatFilm.</p>
