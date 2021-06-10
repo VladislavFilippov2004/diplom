@@ -18,7 +18,6 @@ React.useEffect(() => {// хук, который задаёт значения �
   email: currentUser.email})
 }, [currentUser]);
 
-console.log(currentUser, 'это currentUser')
   return (
     <>
       <Header isLoggedIn={props.isLoggedIn} BurgerMenu={props.openBurgerMenu}></Header>

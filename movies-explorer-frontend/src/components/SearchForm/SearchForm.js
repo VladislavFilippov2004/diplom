@@ -8,9 +8,8 @@ function SearchForm(props) {
 
   const [findButtonWasClicked, setFindButtonWasClicked] = React.useState(false);
   const [shortSwitchState, setShortSwitchState] = React.useState(false);
-  const inputRef = React.useRef('');
-
   const [allMovies, setAllMovies] = React.useState([]);
+  const inputRef = React.useRef('');
 
     function reverseShortSwitchState() {
         setShortSwitchState(!shortSwitchState)
