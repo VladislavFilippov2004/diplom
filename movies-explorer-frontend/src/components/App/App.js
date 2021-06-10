@@ -18,13 +18,11 @@ import auth from '../../utils/auth.js';
 import api from '../../utils/MainApi.js';
 import '../../index.css';
 import { Route, Switch } from 'react-router';
-import moviesApiInstance from '../../utils/MoviesApi';
 import constants from '../../utils/constants';
 
 function App() {
   const history = useHistory();
   const [currentUser, setCurrentUser] = React.useState({});
-  const [allMovies, setAllMovies] = React.useState([]);
   const [isBurgerMenuOpen, setBurgerMenu] = React.useState(false);
   const [isLoggedIn, setLoggedIn] = React.useState(false);
   const [isInfoTooltipPopupOpen, setInfoTooltipPopup] = React.useState(false);
@@ -122,14 +120,6 @@ function App() {
     history.push('/')
 }
 
-  React.useEffect(() => {
-    checkToken()
-    console.log(currentUser)
-    moviesApiInstance.getMovies()
-      .then((res) => {
-        setAllMovies(res);
-      });
-  }, []);
   function closeAllPopups() {
     setBurgerMenu(false);
     setInfoTooltipPopup(false)
@@ -155,7 +145,7 @@ function App() {
           onUpdateUser={handleUpdateUser} signOut={handleSignOut} isLoggedIn={true}
           ></ProtectedRoute>
           <ProtectedRoute exact path='/movies' loggedIn={isLoggedIn} component={Movies}
-           allMovies={allMovies} openBurgerMenu={handleBurgerMenu} isLoggedIn={true}>
+            openBurgerMenu={handleBurgerMenu} isLoggedIn={true}>
 
           </ProtectedRoute>
           <ProtectedRoute path='/saved-movies' loggedIn={isLoggedIn} component={SavedMovies}
