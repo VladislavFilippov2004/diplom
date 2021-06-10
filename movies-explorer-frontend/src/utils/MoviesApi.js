@@ -13,7 +13,8 @@ class MoviesApi {
           return res.json();
         }
         return Promise.reject(`Не удалось получить фильмы с сервера: ${res.status}`);
-      });
+      })
+      .catch((err) => console.log(err));
   }
 }
 

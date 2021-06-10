@@ -15,13 +15,11 @@ import PageNotFound from '../PageNotFound/PageNotFound.js';
 import auth from '../../utils/auth.js';
 import '../../index.css';
 import { Route, Switch } from 'react-router';
-import moviesApiInstance from '../../utils/MoviesApi';
 import constants from '../../utils/constants';
 
 function App() {
   const history = useHistory();
   const [currentUser, setCurrentUser] = React.useState({});
-  const [allMovies, setAllMovies] = React.useState([]);
   const [isBurgerMenuOpen, setBurgerMenu] = React.useState(false);
 
   function handleBurgerMenu() {
@@ -47,15 +45,6 @@ function App() {
     })
   }
 
-  React.useEffect(() => {
-    moviesApiInstance.getMovies()
-      .then((res) => {
-        setAllMovies(res);
-      });
-  }, []);
-
-console.log('allMovies', allMovies)
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='root'>
@@ -77,14 +66,14 @@ console.log('allMovies', allMovies)
           </Route>
           <Route path='/movies'>
             <Header BurgerMenu={handleBurgerMenu}></Header>
-            <Movies allMovies={allMovies} />
+            <Movies />
             <Footer></Footer>
           </Route>
+
           <Route path='/saved-movies'>
             <Header></Header>
             <SavedMovies></SavedMovies>
             <Footer></Footer>
-
           </Route>
           <Route path='*'>
             <PageNotFound></PageNotFound>
