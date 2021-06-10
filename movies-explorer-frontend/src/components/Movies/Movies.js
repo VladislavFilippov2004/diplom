@@ -11,7 +11,6 @@ function Movies(props) {
 
   const [gridStyle, setGridStyle] = React.useState();
   const [cardsToShow, setCardsToShow] = React.useState([]);
-  let allMovies = [];
 
   function defineGridStyle(width) {
     const widthItem = constants.widthModes.find(item => (width >= item.minWidth) && (width < item.maxWidth));
