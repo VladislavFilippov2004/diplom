@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import SearchForm from '../SearchForm/SearchForm.js'
+import Header from '../Header/Header.js';
+import Footer from '../Footer/Footer.js';
 import MoviesCard from '../MoviesCard/MoviesCard.js'
 import InitialMovies from '../../utils/movies.js'
 import constants from '../../utils/constants.js';
@@ -14,6 +16,7 @@ function Movies(props) {
 
   return (
     <div className='movies'>
+      <Header isLoggedIn={props.isLoggedIn} BurgerMenu={props.openBurgerMenu}></Header>
       <SearchForm></SearchForm>
 
       <section className='movies__cards'>
@@ -29,6 +32,7 @@ function Movies(props) {
       <button className='movies__continue-button'>
         Ещё
         </button>
+        <Footer></Footer>
     </div>
   )
 

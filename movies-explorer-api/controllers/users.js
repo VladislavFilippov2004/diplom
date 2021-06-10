@@ -31,6 +31,7 @@ const createUser = (req, res, next) => {
   });
 };
 const login = (req, res, next) => {
+  console.log('login');
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
@@ -42,9 +43,11 @@ const login = (req, res, next) => {
     });
 };
 const getCurrentUser = (req, res, next) => {
+  console.log('getCurrentUser');
   const myId = req.user._id;
   User.findById((myId))
     .then((user) => {
+      console.log(user);
       if (!user) {
         throw new NotFoundError('Пользователь не найден');
       }

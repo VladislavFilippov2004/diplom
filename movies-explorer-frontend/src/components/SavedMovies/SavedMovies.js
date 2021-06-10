@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import SearchForm from '../SearchForm/SearchForm.js';
 import MoviesCard from '../MoviesCard/MoviesCard.js';
 import savedInitialCards from '../../utils/savedmovies.js';
+import Header from '../Header/Header.js';
 function SavedMovies(props) {
     const [savedCards, setCards] = React.useState([]);
     React.useEffect(() => {
@@ -11,9 +12,10 @@ function SavedMovies(props) {
       }, [])
     return (
         <div className='movies'>
+          <Header isLoggedIn={props.isLoggedIn} BurgerMenu={props.openBurgerMenu}></Header>
             <SearchForm></SearchForm>
             <section className='movies__cards'>
-        {savedCards.map((item) =><MoviesCard card={item}/>)} 
+        {savedCards.map((item) =><MoviesCard card={item}/>)}
         </section>
         </div>
     )
