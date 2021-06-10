@@ -42,8 +42,11 @@ function App() {
     } else {
       console.log('isLogged false App.js')
     }
-
   }, [isLoggedIn])
+
+  React.useEffect(() => {
+    checkToken()
+  }, []);
 
   function handleBurgerMenu() {
     setBurgerMenu(true)
