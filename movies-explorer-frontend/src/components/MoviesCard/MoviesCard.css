@@ -8,7 +8,7 @@
     flex-direction: row;
     justify-content: space-between;
     background-color: #fdfdfd;
-    object-fit: contain;
+    /* object-fit: contain; */
     /* border: 2px solid gold; */
     margin: 0;
     width: 100%;

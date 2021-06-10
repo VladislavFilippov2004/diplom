@@ -8,8 +8,10 @@ function SearchForm(props) {
 
   const [findButtonWasClicked, setFindButtonWasClicked] = React.useState(false);
   const [shortSwitchState, setShortSwitchState] = React.useState(false);
-  const [allMovies, setAllMovies] = React.useState([]);
   const inputRef = React.useRef('');
+
+  // const [allMovies, setAllMovies] = React.useState([]);
+  const [allMovies, setAllMovies] = React.useState([]);
 
     function reverseShortSwitchState() {
         setShortSwitchState(!shortSwitchState)
@@ -27,18 +29,19 @@ function SearchForm(props) {
       moviesApiInstance.getMovies()
         .then((res) => {
           setAllMovies(Array.from(res));
-          console.log(allMovies);
+          const data = res;
+          return data;
         })
-        .then(() => filterMovies(query))
+        .then((array) => filterMovies(query, array))
         .catch ((err) => console.log(err))
         .finally(() => console.log('allMovies в finally', allMovies));
     } else {
-      filterMovies(query)
+      filterMovies(query, allMovies)
     }
   };
 
-  function filterMovies(query) {
-    let searchResults = allMovies.filter((item) => {
+  function filterMovies(query, array) {
+    let searchResults = array.filter((item) => {
       try {
         return item.nameRU.toLowerCase().includes(query) || item.nameEN.toLowerCase().includes(query)
       }
@@ -55,7 +58,7 @@ function SearchForm(props) {
                 <button className='search-form__button-magnifier'>
                     <img src={magnifier} alt='кнопка поиска'></img>
                 </button>
-          <input name='searchReqField' className='search-form__input' placeholder='Фильм' ref={inputRef}></input>
+          <input name='searchReqField' className='search-form__input' placeholder='Фильм' ref={inputRef} required></input>
                 <button className='search-form__button-find' onClick={handleMoviesSearch} >Найти</button>
             </div>
             <div className='search-form__checkbox'>

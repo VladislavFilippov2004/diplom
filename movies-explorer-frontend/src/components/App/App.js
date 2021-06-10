@@ -28,8 +28,11 @@ function App() {
   const [isInfoTooltipPopupOpen, setInfoTooltipPopup] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isSuccessAuth, setIsSuccessAuth] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [isLoadingError, setIsLoadingError] = React.useState('')
 
   React.useEffect(() => {
+    setIsLoading(true)
     if (isLoggedIn === true) {
       api.getUserInformation()
       .then((res) => {
@@ -38,12 +41,20 @@ function App() {
       })
       .catch((err) => {
         console.log('Попало в catch(getUserInfo', err);
+        setIsLoadingError(err)
+      })
+      .finally(() => {
+        setIsLoading(false)
       })
     } else {
       console.log('isLogged false App.js')
     }
 
   }, [isLoggedIn])
+
+  React.useEffect(() => {
+    checkToken()
+}, [])
 
   function handleBurgerMenu() {
     setBurgerMenu(true)
@@ -72,10 +83,12 @@ function App() {
             handleLogin(email, password)
           }
           else {
+            setIsLoadingError('При регистрации произошла ошибка. Попробуйте ещё раз')
             console.log('Не получилось зарегать', res)
           }
         } catch (err) {
           console.log('Всё прям плохо', err)
+          setIsLoadingError(err)
         }
       })
   }
@@ -93,6 +106,7 @@ function App() {
           }
         } catch (err) {
           console.log('всё прям плохо', err)
+          setIsLoadingError(err)
         }
       })
       .then((res) => {
@@ -145,7 +159,7 @@ function App() {
           onUpdateUser={handleUpdateUser} signOut={handleSignOut} isLoggedIn={true}
           ></ProtectedRoute>
           <ProtectedRoute exact path='/movies' loggedIn={isLoggedIn} component={Movies}
-            openBurgerMenu={handleBurgerMenu} isLoggedIn={true}>
+            openBurgerMenu={handleBurgerMenu} isLoggedIn={true} isLoading={isLoading}>
 
           </ProtectedRoute>
           <ProtectedRoute path='/saved-movies' loggedIn={isLoggedIn} component={SavedMovies}
@@ -158,7 +172,7 @@ function App() {
 
         </Switch>
         <BurgerMenu isOpen={isBurgerMenuOpen} onClose={closeAllPopups}></BurgerMenu>
-        <InfoToolTip isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopups} isSuccess={isSuccess}></InfoToolTip>
+        <InfoToolTip isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopups} isSuccess={isSuccess} ></InfoToolTip>
       </div>
     </CurrentUserContext.Provider>
   );

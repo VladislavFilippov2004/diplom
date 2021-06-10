@@ -54,7 +54,7 @@ function Movies(props) {
           catch { }
         })}
       </section>
-
+        {props.isLoading ? <Preloader /> : ''}
       <button className='movies__continue-button'>
         Ещё
         </button>

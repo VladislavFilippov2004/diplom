@@ -8,9 +8,9 @@ function Header(props) {
   if (props.isLoggedIn) {
     return (
       <header className='header'>
-        <a href='/' className='header__logo'>
+        <NavLink to='/' className='header__logo'>
           <img className='header__logo' src={logo} alt='Плохое соединение с интернетом' />
-        </a>
+        </NavLink>
         <nav className='header__links'>
           <div className='header__profile-links'>
             <NavLink className='header__link_films' to='/movies'>Фильмы</NavLink>

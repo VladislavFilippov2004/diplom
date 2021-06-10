@@ -13,15 +13,10 @@ class MainApi {
       }
     })
       .then(res => {
-        // console.log(res.ok)
         if (res.ok) {
-          // console.log(res)
-          // console.log(res.json())
-          // console.log('попал в if')
           return res.json();
 
         }
-        // console.log('сейчас выдам reject')
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .catch((err) => {
@@ -41,7 +36,7 @@ class MainApi {
       })
     })
       .then(res => {
-        console.log(res,'от changeUserApi')
+        console.log(res, 'от changeUserApi')
         if (res.ok) {
           return res.json();
         }
@@ -50,9 +45,47 @@ class MainApi {
       .catch(err => {
         console.log(err)
       })
-
+  }
+  saveFilm(data) {
+    return fetch(`${this._baseUrl}/api/movies`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      'body': JSON.stringify({
+        data
+      })
+    })
+    .then(res => {
+      if (res.status === 200) {
+        return res.json()
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+  deleteFilm(data) {
+    return fetch(`${this._baseUrl}/api/movies/${data.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(res => {
+      if (res.status === 200) {
+        return res.json()
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
 }
-const api = new MainApi (`${constants.baseUrl}`)
+const api = new MainApi(`${constants.baseUrl}`)
 export default api;
