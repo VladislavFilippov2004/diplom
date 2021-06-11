@@ -29,6 +29,7 @@ function App() {
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isSuccessAuth, setIsSuccessAuth] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
+  const [isLiked, setIsLiked] = React.useState(false);
   const [isLoadingError, setIsLoadingError] = React.useState('')
 
   React.useEffect(() => {
@@ -37,7 +38,7 @@ function App() {
       api.getUserInformation()
       .then((res) => {
         setCurrentUser(res)
-        console.log(res)
+        // console.log(res)
       })
       .catch((err) => {
         console.log('Попало в catch(getUserInfo', err);
@@ -128,6 +129,22 @@ function App() {
         setInfoTooltipPopup(true)
       })
   }
+  function handleLike(data, isLiked) {
+
+    setIsLiked(!isLiked)
+    // console.log(isLiked)
+    // console.log('Работает')
+    // api.saveFilm(data)
+  }
+
+  function saveMovie(movie) {
+    api.saveFilm(movie)
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err)=> console.log(err))
+  }
+
   function handleSignOut() {
     localStorage.removeItem('token');
     setLoggedIn(false)
@@ -159,7 +176,7 @@ function App() {
           onUpdateUser={handleUpdateUser} signOut={handleSignOut} isLoggedIn={true}
           ></ProtectedRoute>
           <ProtectedRoute exact path='/movies' loggedIn={isLoggedIn} component={Movies}
-            openBurgerMenu={handleBurgerMenu} isLoggedIn={true} isLoading={isLoading}>
+            openBurgerMenu={handleBurgerMenu} isLoggedIn={true} isLoading={isLoading} onLike={saveMovie} handleLike={handleLike}>
 
           </ProtectedRoute>
           <ProtectedRoute path='/saved-movies' loggedIn={isLoggedIn} component={SavedMovies}
