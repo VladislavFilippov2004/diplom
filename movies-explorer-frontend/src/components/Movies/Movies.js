@@ -73,15 +73,16 @@ function Movies(props) {
       setSearchResult(props.searchMovies(query, allMovies, shortSwitchStatus))
       createCardsToShow(searchResult, widthMode, 0)
     } else {
-      moviesApiInstance.getMovies()
       setPreloaderState(true)
-        .then((res) => {
+      moviesApiInstance.getMovies()
+      .then((res) => {
           const checkedArr = checkInitialArray(res)
           localStorage.setItem('allMovies', JSON.stringify(checkedArr))
           setSearchResult(props.searchMovies(query, checkedArr, shortSwitchStatus))
           createCardsToShow(searchResult, widthMode, 0)
         })
-        .catch((err) => console.log(err))
+        .catch(
+          (err) => console.log(err))
         .finally(() => {
           setPreloaderState(false)
         })

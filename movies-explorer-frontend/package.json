@@ -23,7 +23,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "npx eslint"
+    "lint": "npx eslint",
+    "deploy": "npm run build && scp -r ./build/* vvf@178.154.207.104:/home/vvf/movies-explorer-frontend"
   },
   "eslintConfig": {
     "extends": [

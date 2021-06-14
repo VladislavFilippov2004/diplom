@@ -1,5 +1,5 @@
 const constants = {
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://movies-vf.nomoredomains.club',
   moviesUrl: 'https://api.nomoreparties.co/beatfilm-movies',
   movieImageUrl: 'https://api.nomoreparties.co',
   widthModes: [
