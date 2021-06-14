@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom'
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 import './App.css';
@@ -15,10 +15,9 @@ import BurgerMenu from '../BurgerMenu/BurgerMenu.js';
 import PageNotFound from '../PageNotFound/PageNotFound.js';
 import InfoToolTip from '../InfoToolTip/InfoToolTip.js';
 import auth from '../../utils/auth.js';
-import api from '../../utils/MainApi.js';
+import mainApiInstance from '../../utils/MainApi.js';
 import '../../index.css';
 import { Route, Switch } from 'react-router';
-import constants from '../../utils/constants';
 
 function App() {
   const history = useHistory();
@@ -29,33 +28,47 @@ function App() {
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isSuccessAuth, setIsSuccessAuth] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
-  const [isLiked, setIsLiked] = React.useState(false);
   const [isLoadingError, setIsLoadingError] = React.useState('')
+ const [savedMoviesArr, setSavedMoviesArr] = React.useState([]);
+
+ React.useEffect(() => {
+   checkToken()
+ }, [])
 
   React.useEffect(() => {
     setIsLoading(true)
     if (isLoggedIn === true) {
-      api.getUserInformation()
-      .then((res) => {
-        setCurrentUser(res)
-        // console.log(res)
-      })
-      .catch((err) => {
-        console.log('Попало в catch(getUserInfo', err);
-        setIsLoadingError(err)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
+      mainApiInstance.getUserInformation()
+        .then((res) => {
+          setCurrentUser(res)
+        })
+        .catch((err) => {
+          setIsLoadingError(err)
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
     } else {
-      console.log('isLogged false App.js')
+      console.log('isLogged is false App.js')
     }
 
   }, [isLoggedIn])
 
+
   React.useEffect(() => {
-    checkToken()
-}, [])
+    if (currentUser._id !== null){
+      mainApiInstance.getSavedMovies()
+      .then((res) => {
+        const initSavedMovies = res.filter((item) =>
+           item.owner === currentUser._id
+        );
+        setSavedMoviesArr(initSavedMovies)
+      })
+    } else {
+      console.log('currentUser не прошёл проверку')
+    }
+  }, [currentUser])
+
 
   function handleBurgerMenu() {
     setBurgerMenu(true)
@@ -77,28 +90,25 @@ function App() {
 
   function handleRegister(email, password, name) {
     auth.register(email, password, name)
-    .then((res) => {
+      .then((res) => {
         try {
-          console.log(res, 'handleLogin')
           if (res.status === 200) {
             handleLogin(email, password)
           }
           else {
             setIsLoadingError('При регистрации произошла ошибка. Попробуйте ещё раз')
-            console.log('Не получилось зарегать', res)
           }
         } catch (err) {
-          console.log('Всё прям плохо', err)
           setIsLoadingError(err)
         }
       })
   }
+
   function handleLogin(email, password) {
     auth.authorize(email, password)
       .then((res) => {
         try {
           if (res.status === 200) {
-            console.log('всё хорошо', res)
             setIsSuccessAuth(false)
             return res.json()
           } else {
@@ -106,7 +116,6 @@ function App() {
             return res.json()
           }
         } catch (err) {
-          console.log('всё прям плохо', err)
           setIsLoadingError(err)
         }
       })
@@ -116,40 +125,63 @@ function App() {
       })
       .catch((err) => console.log(err))
   }
+
   function handleUpdateUser(data) {
-    api.changeUserInformation(data)
+    mainApiInstance.changeUserInformation(data)
       .then((res) => {
         setCurrentUser(res)
         setIsSuccess(true)
         setInfoTooltipPopup(true)
       })
       .catch((err) => {
-        console.log(err)
         setIsSuccess(false)
         setInfoTooltipPopup(true)
       })
   }
-  function handleLike(data, isLiked) {
 
-    setIsLiked(!isLiked)
-    // console.log(isLiked)
-    // console.log('Работает')
-    // api.saveFilm(data)
+  function handleLike(movieId, mongoId, likeStatus) {
+    const allMovies = Array.from(JSON.parse(localStorage.getItem('allMovies')));
+    const movie = allMovies.find((item) => item.id === movieId)
+
+    if (!likeStatus) {
+    mainApiInstance.saveFilm(movie)
+      .then((res) => {
+        setSavedMoviesArr([res, ...savedMoviesArr])
+      })
+      .catch((err) => console.log('Ошибка в handleLike',err))
+    } else {
+      mainApiInstance.deleteFilm(mongoId)
+      .then((res) => {
+        let array = savedMoviesArr.slice();
+       const index = array.findIndex((obj) => {
+         return obj._id === mongoId
+       })
+       array.splice(index, 1)
+       setSavedMoviesArr(array)
+      })
+      .catch((err) => console.log('ошибка в handleDelete',err, 'Пришло в deleteFilm (catch)', mongoId))
+    }
+
   }
 
-  function saveMovie(movie) {
-    api.saveFilm(movie)
-    .then((res) => {
-      console.log(res)
+  function searchMovies(query, array, shortSwitchStatus) {
+    let searchResults = array.filter((item) => {
+      try {
+        return (item.nameRU.toLowerCase().includes(query) || item.nameEN.toLowerCase().includes(query)) &&
+          (shortSwitchStatus ? item.duration <= 40 : true);
+      }
+      catch {
+        return false;
+      }
     })
-    .catch((err)=> console.log(err))
-  }
+    return searchResults
+  };
 
   function handleSignOut() {
     localStorage.removeItem('token');
     setLoggedIn(false)
     history.push('/')
-}
+  }
 
   function closeAllPopups() {
     setBurgerMenu(false);
@@ -173,14 +205,14 @@ function App() {
             <Register onRegister={handleRegister}></Register>
           </Route>
           <ProtectedRoute path='/profile' loggedIn={isLoggedIn} component={Profile}
-          onUpdateUser={handleUpdateUser} signOut={handleSignOut} isLoggedIn={true}
+            onUpdateUser={handleUpdateUser} signOut={handleSignOut} isLoggedIn={true}
           ></ProtectedRoute>
           <ProtectedRoute exact path='/movies' loggedIn={isLoggedIn} component={Movies}
-            openBurgerMenu={handleBurgerMenu} isLoggedIn={true} isLoading={isLoading} onLike={saveMovie} handleLike={handleLike}>
+            openBurgerMenu={handleBurgerMenu} searchMovies={searchMovies} isLoggedIn={true} isLoading={isLoading} onLike={handleLike} savedMovies={savedMoviesArr}>
 
           </ProtectedRoute>
           <ProtectedRoute path='/saved-movies' loggedIn={isLoggedIn} component={SavedMovies}
-          openBurgerMenu={handleBurgerMenu} isLoggedIn={true}
+            openBurgerMenu={handleBurgerMenu} searchMovies={searchMovies} isLoggedIn={true} savedMovies={savedMoviesArr} onLike={handleLike}
           ></ProtectedRoute>
 
           <Route path='*'>

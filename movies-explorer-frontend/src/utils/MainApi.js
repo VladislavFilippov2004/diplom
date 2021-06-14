@@ -54,7 +54,17 @@ class MainApi {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       'body': JSON.stringify({
-        data
+        country: data.country,
+        director: data.director,
+        year: data.year,
+        duration: data.duration,
+        description: data.description,
+        image: data.image.url,
+        trailer: data.trailerLink,
+        thumbnail: data.image.formats.thumbnail.url,
+        movieId: data.id,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
       })
     })
     .then(res => {
@@ -68,7 +78,7 @@ class MainApi {
     })
   }
   deleteFilm(data) {
-    return fetch(`${this._baseUrl}/api/movies/${data.id}`, {
+    return fetch(`${this._baseUrl}/api/movies/${data}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -85,7 +95,26 @@ class MainApi {
       console.log(err);
     })
   }
+  getSavedMovies() {
+    return fetch(`${this._baseUrl}/api/movies`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(res => {
+      if (res.status === 200) {
+        return res.json()
+      }
+      return Promise.reject(`Ошибка: ${res.status}`)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
 }
-const api = new MainApi(`${constants.baseUrl}`)
-export default api;
+
+const mainApiInstance = new MainApi(`${constants.baseUrl}`)
+export default mainApiInstance;

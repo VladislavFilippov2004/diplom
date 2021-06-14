@@ -26,12 +26,12 @@ React.useEffect(() => {// хук, который задаёт значения �
       <form className='profile__form' onSubmit={handleSubmit}>
         <div className='profile__form_box'>
           <p className='profile__form_subtitle'>Имя </p>
-          <input name="name" value={values.name } onChange={handleChange} className='profile__form_input' required pattern="[^0-9]+"></input>
+          <input name="name" value={values.name || '' } onChange={handleChange} className='profile__form_input' required pattern="[^0-9]+"></input>
         </div>
           <p className='reg-log__validation-text'>{errors.name}</p>
         <div className='profile__form_box'>
           <p className='profile__form_subtitle'>Почта </p>
-          <input name="email" value={values.email} onChange={handleChange} className='profile__form_input' required pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"></input>
+          <input name="email" value={values.email || ''} onChange={handleChange} className='profile__form_input' required pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$"></input>
         </div>
           <p className='reg-log__validation-text'>{errors.email}</p>
       </form>

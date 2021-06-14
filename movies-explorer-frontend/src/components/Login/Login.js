@@ -8,9 +8,7 @@ function Login(props) {
     const {values, handleChange, errors, isValid} = useForm();
     function handleSubmit(e) {
       e.preventDefault()
-      console.log('В логине вывожу value inputa email', values.email)
       props.onLogin(values.email, values.password)
-      console.log(values)
   }
     return (
         <div className='reg-log'>

@@ -1,4 +1,3 @@
-import { Route, Switch } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import account from '../../images/icon.svg';

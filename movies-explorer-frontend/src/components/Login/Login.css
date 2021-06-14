@@ -3,14 +3,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* border: 8px solid lawngreen; */
     width: 100%;
     max-height: 100vh;
 }
 .reg-log__content {
     margin-top: 70px;
     width: 396px;
-    /* border: 2px solid blue; */
 }
 .reg-log__top {
     margin:0 0 40px;
@@ -23,7 +21,6 @@
     font-size: 24px;
     line-height: 29px;
     margin: 0;
-    /* border: 1px solid red; */
 }
 .reg-log__form_subtitle {
     margin: 0 0 10px;
@@ -96,7 +93,6 @@
 @media screen and (max-width: 770px) {
     .reg-log__content {
         margin-top: 230px;
-        /* border: 2px solid blue; */
     }
 }
 @media screen and (max-width: 400px) {

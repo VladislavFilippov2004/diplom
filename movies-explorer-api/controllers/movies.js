@@ -8,6 +8,7 @@ const createMovie = (req, res, next) => {
   Movie.create(movieData)
     .then((movie) => res.send(movie))
     .catch((err) => {
+      console.log(err, 'Validation');
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при создании фильма'));
       } else {
@@ -20,6 +21,7 @@ const getMovies = (req, res, next) => {
     .then((movies) => res.send(movies))
     .catch((err) => next(err));
 };
+
 const deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
   Movie.findById(movieId)

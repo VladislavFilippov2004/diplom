@@ -25,10 +25,10 @@ const movieSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-    validate: {
-      validator: (v) => validator.isURL(v),
-      message: 'Введите url',
-    },
+    // validate: {
+    //   validator: (v) => validator.isURL(v),
+    //   message: 'Введите url',
+    // },
   },
   trailer: {
     type: String,
@@ -41,10 +41,10 @@ const movieSchema = new mongoose.Schema({
   thumbnail: {
     type: String,
     required: true,
-    validate: {
-      validator: (v) => validator.isURL(v),
-      message: 'Введите url',
-    },
+    // validate: {
+    //   validator: (v) => validator.isURL(v),
+    //   message: 'Введите url',
+    // },
   },
   movieId: {
     type: Number,

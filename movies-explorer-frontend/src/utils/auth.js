@@ -50,7 +50,6 @@ class Auth {
       }
     })
       .then((res) => {
-        console.log('checkToken auth response', res)
         return res
       })
       .catch((err) => console.log('Ошибка.', err))

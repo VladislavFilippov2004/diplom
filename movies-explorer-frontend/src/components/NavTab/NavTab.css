@@ -1,10 +1,8 @@
 .navigation {
-    /* margin-top:auto; */
     margin-bottom: 30px;
     display: flex;
     flex-direction: row;
     gap: 7px;
-    /* border: 3px solid black; */
 }
 .navigation__box {
     display: flex;
@@ -14,7 +12,7 @@
     height: 35px;
     border-radius: 8px;
     background-color: black;
-    
+
 }
 .navigation__link {
     display: block;

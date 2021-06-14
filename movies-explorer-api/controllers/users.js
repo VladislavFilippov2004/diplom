@@ -43,11 +43,9 @@ const login = (req, res, next) => {
     });
 };
 const getCurrentUser = (req, res, next) => {
-  console.log('getCurrentUser');
   const myId = req.user._id;
   User.findById((myId))
     .then((user) => {
-      console.log(user);
       if (!user) {
         throw new NotFoundError('Пользователь не найден');
       }
