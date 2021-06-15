@@ -18,7 +18,5 @@ class MoviesApi {
   }
 }
 
-
-const moviesApiInstance = new MoviesApi(constants.moviesUrl);
-
+const moviesApiInstance = new MoviesApi(constants.MoviesUrl);
 export default moviesApiInstance;

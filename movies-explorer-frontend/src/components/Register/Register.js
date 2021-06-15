@@ -1,43 +1,36 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
+import useForm from '../../utils/useForm.js';
 import logo from '../../images/logo.svg';
 function Register(props) {
-    const [email, setEmail] = React.useState();
-    const [password, setPassword] = React.useState();
-    const [name, setName] = React.useState()
+  const {values, handleChange, errors, isValid} = useForm();
 
-    function onEmailChange(e) {
-        setEmail(e.target.value)
-    }
-
-    function onPasswordChange(e) {
-        setPassword(e.target.value)
-    }
-    function onNameChange(e) {
-        setName(e.target.value)
-    }
     function handleSubmit(e) {
         e.preventDefault();
-        props.onRegister(email, password, name)
+        props.onRegister(values.emailRegister, values.passwordRegister, values.name)
     }
 
     return (
         <div className='reg-log'>
-        <div className='reg-log__content'> 
+        <div className='reg-log__content'>
             <div className='reg-log__top'>
                 <img className='header__logo' src={logo} alt='Плохое соединение с интернетом' />
                 <h2 className='reg-log__title'>Добро пожаловать!</h2>
             </div>
             <form className='reg-log__form' onSubmit={handleSubmit}>
                 <p className='reg-log__form_subtitle'>Имя</p>
-                <input value={name || ''} onChange={onNameChange} className='reg-log__form_input'></input>
+                <input name='name' value={values.name || ''} onChange={handleChange} className='reg-log__form_input' type='text' required pattern="[^0-9]+"></input>
+                <p className='reg-log__validation-text'>{errors.name}</p>
                 <p className='reg-log__form_subtitle'>E-mail</p>
-                <input className='reg-log__form_input' onChange={onEmailChange}></input>
+                <input name='emailRegister' className='reg-log__form_input' pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$" value={values.emailRegister || ''} onChange={handleChange}  required></input>
+                <p className='reg-log__validation-text'>{errors.emailRegister}</p>
                 <p className='reg-log__form_subtitle'>Пароль</p>
-                <input className='reg-log__form_input' onChange={onPasswordChange}></input>
-                <button className='reg-log__button'>Зарегистрироваться</button>
+                <input name='passwordRegister' className='reg-log__form_input' value={values.passwordRegister || ''}  onChange={handleChange} type='password' required></input>
+                <p className='reg-log__validation-text'>{errors.passwordRegister}</p>
+                <button disabled={!isValid} className={`${isValid ? 'reg-log__button' : 'reg-log__button_disabled'}`}>Зарегистрироваться</button>
                 <div className='reg-log__navigation'>
                     <p className='reg-log__text'>Уже зарегистрированы?</p>
-                    <a href='/signin' className='reg-log__link'>Войти</a>
+                    <NavLink className='reg-log__link' to='/signin'>Войти</NavLink>
                 </div>
             </form>
         </div>

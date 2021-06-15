@@ -29,6 +29,9 @@ margin-bottom: auto;
 border: 0;
 width: 90%;
 }
+.profile__form_input:placeholder-shown {
+  color: black;
+}
 .profile__edit-button {
     border: 0px;
     background-color: white;
@@ -37,6 +40,9 @@ width: 90%;
     color: black;
     margin-top: 220px;
     margin-bottom: 16px;
+}
+.profile__edit-button:disabled {
+  color: grey;
 }
 .profile__exit-button {
     border: 0px;

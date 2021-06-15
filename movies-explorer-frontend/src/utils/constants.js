@@ -1,45 +1,49 @@
 const constants = {
-  baseUrl: 'https://movies-vf.nomoredomains.club',
-  moviesUrl: 'https://api.nomoreparties.co/beatfilm-movies',
-  movieImageUrl: 'https://api.nomoreparties.co',
+  BaseUrl: 'https://movies-vf.nomoredomains.club',
+  // BaseUrl: 'http://localhost:3000',
+  MoviesUrl: 'https://api.nomoreparties.co/beatfilm-movies',
+  MovieImageUrl: 'https://api.nomoreparties.co',
+  ShortFilmDuration: 40,
   widthModes: [
     {
       widthMode: '1280_plus',
       maxWidth: Infinity,
       minWidth: 1280,
-      cssClassName: 'movies__cards_1280-plus',
+      cssClassName: 'movies__cards',
       cardsInRow: 3,
       numberOfRows: 5,
       addCards: 3
     },
     {
-      widthMode: '768_1280',
+      widthMode: '761_1280',
       maxWidth: 1280,
-      minWidth: 768,
-      cssClassName: 'movies__cards_768-1280',
+      minWidth: 761,
+      cssClassName: 'movies__cards',
       cardsInRow: 2,
       numberOfRows: 4,
       addCards: 2
     },
     {
-      widthMode: '480_768',
-      maxWidth: 768,
+      widthMode: '480_760',
+      maxWidth: 760,
       minWidth: 480,
-      cssClassName: 'movies__cards_480-768',
+      cssClassName: 'movies__cards',
       cardsInRow: 2,
       numberOfRows: 4,
       addCards: 2
     },
     {
-      widthMode: '320_480',
+      widthMode: '0_480',
       maxWidth: 480,
-      minWidth: 320,
-      cssClassName: 'movies__cards_320-480',
-      cardsInRow: 2,
-      numberOfRows: 4,
-      addCards: 2
+      minWidth: 0,
+      cssClassName: 'movies__cards',
+      cardsInRow: 1,
+      numberOfRows: 5,
+      addCards: 1
     },
-  ]
+  ],
+  keysToCheck: ['duration', 'director', 'nameRU', 'nameEN', 'country',
+   'year', 'trailerLink', 'image', 'id', 'description']
 };
 
 export default constants;

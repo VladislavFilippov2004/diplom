@@ -24,10 +24,10 @@ const validateCreateUser = celebrate({
         'string.email': 'Необходимо указать email в корректном формате',
         'string.empty': 'Поле email должно быть заполнено',
       }),
-    password: Joi.string().required().min(6)
+    password: Joi.string().required().min(3)
       .messages({
         'any.required': 'Отсутствует поле password',
-        'string.min': 'Пароль не может быть короче 6-ти символов',
+        'string.min': 'Пароль не может быть короче 3-ти символов',
         'string.empty': 'Поле password должно быть заполнено',
       }),
     name: Joi.string().required().min(2)
@@ -76,7 +76,7 @@ const validateCreateMovie = celebrate({
     director: Joi.string().required()
       .messages({
         'any.required': 'Отсутствует director должно быть заполнено',
-        'string.empty': 'Поле director должно быть заполнено',
+        // 'string.empty': 'Поле director должно быть заполнено',
       }),
     year: Joi.string().required().min(4)
       .messages({
@@ -85,29 +85,29 @@ const validateCreateMovie = celebrate({
       }),
     duration: Joi.number().required()
       .messages({
-        'any.required': 'Отсутствует Поле duration',
-        'string.empty': 'Поле duration должно быть заполнено',
+        'any.required': 'Отсутствует Поле duration тот файл',
+        // 'string.empty': 'Поле duration должно быть заполнено',
       }),
     description: Joi.string().required()
       .messages({
         'any.required': 'Отсутсвует поле description',
-        'string.empty': 'Поле description должно быть заполнено',
+        // 'string.empty': 'Поле description должно быть заполнено',
       }),
     image: Joi.string().required()
       .messages({
         'any.required': 'Отсутсвует картинка',
-        'string.empty': 'Поле image должно быть заполнено',
-      })
-      .custom((value, helpers) => {
-        if (validator.isURL(value)) {
-          return value;
-        }
-        return helpers.message('Невалидный URL картинки');
+        // 'string.empty': 'Поле image должно быть заполнено',
       }),
+    // .custom((value, helpers) => {
+    //   if (validator.isURL(value)) {
+    //     return value;
+    //   }
+    //   return helpers.message('Невалидный URL картинки');
+    // }),
     trailer: Joi.string().required()
       .messages({
         'any.required': 'Отсутсвует trailer',
-        'string.empty': 'Поле trailer должно быть заполнено',
+        // 'string.empty': 'Поле trailer должно быть заполнено',
       })
       .custom((value, helpers) => {
         if (validator.isURL(value)) {
@@ -118,28 +118,28 @@ const validateCreateMovie = celebrate({
     thumbnail: Joi.string().required()
       .messages({
         'any.required': 'Отсутсвует thumbanail',
-        'string.empty': 'Поле thumbnail должно быть заполнено',
-      })
-      .custom((value, helpers) => {
-        if (validator.isURL(value)) {
-          return value;
-        }
-        return helpers.message('Невалидный URL трейлера');
+        // 'string.empty': 'Поле thumbnail должно быть заполнено',
       }),
+    // .custom((value, helpers) => {
+    //   if (validator.isURL(value)) {
+    //     return value;
+    //   }
+    //   return helpers.message('Невалидный URL трейлера');
+    // }),
     movieId: Joi.number().required()
       .messages({
         'any.required': 'Отсутствует поле movieId',
-        'string.empty': 'Поле movieId должно быть заполнено',
+        // 'string.empty': 'Поле movieId должно быть заполнено',
       }),
     nameRU: Joi.string().required()
       .messages({
         'any.required': 'Отсутствует поле nameRu',
-        'string.empty': 'Поле nameRu должно быть заполено',
+        // 'string.empty': 'Поле nameRu должно быть заполено',
       }),
     nameEN: Joi.string().required()
       .messages({
         'any.required': 'Отстутствует поле nameEn',
-        'string.empty': 'Поле nameEn должно быть заполнено',
+        // 'string.empty': 'Поле nameEn должно быть заполнено',
       }),
   }),
 });
