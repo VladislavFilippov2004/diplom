@@ -5,6 +5,7 @@ class MainApi {
     this._baseUrl = baseUrl
   }
   getUserInformation() {
+    console.log(this._baseUrl)
     return fetch(`${this._baseUrl}/api/users/me`, {
       method: 'GET',
       headers: {
@@ -96,6 +97,7 @@ class MainApi {
     })
   }
   getSavedMovies() {
+    console.log(this._baseUrl)
     return fetch(`${this._baseUrl}/api/movies`, {
       method: 'GET',
       headers: {

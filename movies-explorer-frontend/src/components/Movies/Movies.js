@@ -74,7 +74,7 @@ function Movies(props) {
   }
 
   function handleMoviesSearch(req, shortSwitchStatus) {
-
+    console.log('req', req)
     buttonCounter.current = 0;
     const query = req.toLowerCase();
     let allMovies = [];
@@ -89,7 +89,7 @@ function Movies(props) {
       .then((res) => {
           const checkedArr = checkInitialArray(res)
           localStorage.setItem('allMovies', JSON.stringify(checkedArr))
-          setSearchResult(props.searchMovies(query, checkedArr, shortSwitchStatus))
+          setSearchResult(props.searchMovies(query, checkedArr, shortSwitchStatus, true))
           createCardsToShow(searchResult, widthMode, 0)
         })
         .catch(

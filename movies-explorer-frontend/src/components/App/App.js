@@ -77,8 +77,10 @@ function App() {
 
   function checkToken() {
     const token = localStorage.getItem('token')
+    console.log('token -', token)
     auth.checkToken(token)
       .then((res) => {
+        console.log('res checkToken', res)
         if (res.status === 200) {
           setLoggedIn(true);
           history.push('/movies')
@@ -166,6 +168,7 @@ function App() {
   }
 
   function searchMovies(query, array, shortSwitchStatus, ifSaveToLocalStorage) {
+    console.log('array', array)
     let searchResults = array.filter((item) => {
       try {
         if (query !== '') {
@@ -190,6 +193,7 @@ function App() {
 
   function handleSignOut() {
     localStorage.removeItem('token');
+    console.log('Сейчас удалю localStorage')
     localStorage.removeItem('savedSearchResult')
     setLoggedIn(false)
     history.push('/')

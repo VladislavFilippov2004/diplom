@@ -8,18 +8,19 @@ function SearchForm(props) {
   const [shortSwitchState, setShortSwitchState] = React.useState(false);
   const inputRef = React.useRef('');
 
-  function reverseShortSwitchState(evt) {
+  function handleShortSwitchClick(evt) {
     evt.preventDefault();
     setShortSwitchState(!shortSwitchState)
+    props.onSearch(inputRef.current.value, shortSwitchState)
   }
 
   function handleSearch(evt) {
     evt.preventDefault();
     props.onSearch(inputRef.current.value, shortSwitchState);
   }
-  React.useEffect(() => {
-    props.onSearch(inputRef.current.value, shortSwitchState)
-  }, [shortSwitchState])
+  // React.useEffect(() => {
+  //   props.onSearch(inputRef.current.value, shortSwitchState)
+  // }, [shortSwitchState])
 
   return (
     <form className='search-form'>
@@ -31,7 +32,7 @@ function SearchForm(props) {
         <button className='search-form__button-find' onClick={handleSearch} >Найти</button>
       </div>
       <div className='search-form__checkbox'>
-        <button className='search-form__checkbox_button' onClick={reverseShortSwitchState}><img className='search-form__checkbox_picture' src={`${shortSwitchState ? checkbox : disabledbox}`} alt='Картинка для регулирования поиска'></img></button>
+        <button className='search-form__checkbox_button' onClick={handleShortSwitchClick}><img className='search-form__checkbox_picture' src={`${shortSwitchState ? checkbox : disabledbox}`} alt='Картинка для регулирования поиска'></img></button>
         <p className='search-form__checkbox_text'>Короткометражки</p>
       </div>
     </form>

@@ -1,5 +1,6 @@
 const constants = {
   BaseUrl: 'https://movies-vf.nomoredomains.club',
+  // BaseUrl: 'http://localhost:3000',
   MoviesUrl: 'https://api.nomoreparties.co/beatfilm-movies',
   MovieImageUrl: 'https://api.nomoreparties.co',
   ShortFilmDuration: 40,
