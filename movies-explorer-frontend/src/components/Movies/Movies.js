@@ -17,10 +17,24 @@ function Movies(props) {
   const [widthMode, setWidthMode] = React.useState(constants.widthModes[0]);
   const buttonCounter = React.useRef(0);
 
+  // React.useEffect(()=> {
+  //   alert('cardsToShow', cardsToShow)
+  // }, [cardsToShow])
+
   function defineGridStyle(width) {
     const windowWidth = constants.widthModes.find(item => (width >= item.minWidth) && (width < item.maxWidth))
     setWidthMode(windowWidth);
   }
+  React.useEffect(() => {
+    // console.log('localStorage в этот момент', localStorage.getItem('savedSearchResult'))
+    if (localStorage.getItem('savedSearchResult') !== null) {
+      const searchResultFromLocalStorage = Array.from(JSON.parse(localStorage.getItem('savedSearchResult')))
+
+      setSearchResult(searchResultFromLocalStorage)
+    } else {
+      setSearchResult([])
+    }
+  }, [])
 
   React.useEffect(() => { //определяем необходимый первоначальный стиль css при загрузке страницы
     defineGridStyle(window.innerWidth);
@@ -60,9 +74,6 @@ function Movies(props) {
   }
 
   function handleMoviesSearch(req, shortSwitchStatus) {
-    if (req === '') {
-      return
-    }
 
     buttonCounter.current = 0;
     const query = req.toLowerCase();
@@ -70,7 +81,7 @@ function Movies(props) {
 
     if (localStorage.getItem('allMovies') !== null) {
       allMovies = Array.from(JSON.parse(localStorage.getItem('allMovies')));
-      setSearchResult(props.searchMovies(query, allMovies, shortSwitchStatus))
+      setSearchResult(props.searchMovies(query, allMovies, shortSwitchStatus, true))
       createCardsToShow(searchResult, widthMode, 0)
     } else {
       setPreloaderState(true)
@@ -101,12 +112,13 @@ function Movies(props) {
     buttonCounter.current++
     createCardsToShow(searchResult, widthMode, buttonCounter.current)
   }
+  // console.log('cardsToShow', cardsToShow)
 
   return (
 
     <div className='movies'>
       <Header isLoggedIn={props.isLoggedIn} BurgerMenu={props.openBurgerMenu}></Header>
-      <SearchForm onSearch={handleMoviesSearch}></SearchForm>
+      <SearchForm onSearch={handleMoviesSearch} ifSaveToLocal={true}></SearchForm>
 
       <section id='movies-grid' className={`movies__cards_base-settings ${widthMode.cssClassName} ${cardsToShow.length === 0 ? 'movies__cards_hidden' : ''}`} >
         {cardsToShow.map((item) => {
@@ -139,7 +151,7 @@ function Movies(props) {
               duration={item.duration}
               trailerLink={item.trailerLink}
               country = {item.country}
-              imageUrl={`${constants.movieImageUrl}${item.image.url}`} />
+              imageUrl={`${constants.MovieImageUrl}${item.image.url}`} />
           }
           catch (err) { console.log(err)}
         })}

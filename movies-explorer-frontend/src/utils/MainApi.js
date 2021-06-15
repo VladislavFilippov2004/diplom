@@ -116,5 +116,5 @@ class MainApi {
 
 }
 
-const mainApiInstance = new MainApi(`${constants.baseUrl}`)
+const mainApiInstance = new MainApi(`${constants.BaseUrl}`)
 export default mainApiInstance;

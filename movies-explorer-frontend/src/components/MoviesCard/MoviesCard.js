@@ -21,7 +21,6 @@ function MoviesCard(props) {
       return newTime
     }
   }
-console.log(createRightDuration())
   return (
 
     <div className='movies__card'>

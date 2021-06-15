@@ -55,5 +55,5 @@ class Auth {
       .catch((err) => console.log('Ошибка.', err))
   }
 }
-const auth = new Auth(`${constants.baseUrl}`)
+const auth = new Auth(`${constants.BaseUrl}`)
 export default auth;

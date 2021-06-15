@@ -18,6 +18,7 @@ import auth from '../../utils/auth.js';
 import mainApiInstance from '../../utils/MainApi.js';
 import '../../index.css';
 import { Route, Switch } from 'react-router';
+import constants from '../../utils/constants.js';
 
 function App() {
   const history = useHistory();
@@ -26,8 +27,8 @@ function App() {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
   const [isInfoTooltipPopupOpen, setInfoTooltipPopup] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
-  const [isSuccessAuth, setIsSuccessAuth] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [loginFailed, setLoginFailed] = React.useState(false)
+  const [preloaderState, setPreloaderState] = React.useState(false)
   const [isLoadingError, setIsLoadingError] = React.useState('')
  const [savedMoviesArr, setSavedMoviesArr] = React.useState([]);
 
@@ -36,7 +37,7 @@ function App() {
  }, [])
 
   React.useEffect(() => {
-    setIsLoading(true)
+    setPreloaderState(true)
     if (isLoggedIn === true) {
       mainApiInstance.getUserInformation()
         .then((res) => {
@@ -46,7 +47,7 @@ function App() {
           setIsLoadingError(err)
         })
         .finally(() => {
-          setIsLoading(false)
+          setPreloaderState(false)
         })
     } else {
       console.log('isLogged is false App.js')
@@ -83,7 +84,7 @@ function App() {
           history.push('/movies')
         } else {
           setLoggedIn(false)
-          setIsSuccessAuth(true)
+          setLoginFailed(true)
         }
       })
   }
@@ -109,10 +110,10 @@ function App() {
       .then((res) => {
         try {
           if (res.status === 200) {
-            setIsSuccessAuth(false)
+            setLoginFailed(false)
             return res.json()
           } else {
-            setIsSuccessAuth(true)
+            setLoginFailed(true)
             return res.json()
           }
         } catch (err) {
@@ -164,21 +165,32 @@ function App() {
 
   }
 
-  function searchMovies(query, array, shortSwitchStatus) {
+  function searchMovies(query, array, shortSwitchStatus, ifSaveToLocalStorage) {
     let searchResults = array.filter((item) => {
       try {
-        return (item.nameRU.toLowerCase().includes(query) || item.nameEN.toLowerCase().includes(query)) &&
-          (shortSwitchStatus ? item.duration <= 40 : true);
+        if (query !== '') {
+          return (item.nameRU.toLowerCase().includes(query) || item.nameEN.toLowerCase().includes(query)) &&
+          (shortSwitchStatus ? item.duration <= constants.ShortFilmDuration : true);
+        } else {
+          return shortSwitchStatus ? item.duration <= constants.ShortFilmDuration : true
+        }
       }
       catch {
         return false;
       }
     })
-    return searchResults
+    if (ifSaveToLocalStorage === true) {
+      localStorage.setItem('savedSearchResult', JSON.stringify(searchResults))
+      return searchResults
+    } else {
+      return searchResults
+    }
+
   };
 
   function handleSignOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('savedSearchResult')
     setLoggedIn(false)
     history.push('/')
   }
@@ -199,7 +211,7 @@ function App() {
             <Footer></Footer>
           </Route>
           <Route path='/signin'>
-            <Login onLogin={handleLogin} isSuccess={isSuccessAuth}></Login>
+            <Login onLogin={handleLogin} isSuccess={loginFailed}></Login>
           </Route>
           <Route path='/signup'>
             <Register onRegister={handleRegister}></Register>
@@ -208,11 +220,11 @@ function App() {
             onUpdateUser={handleUpdateUser} signOut={handleSignOut} isLoggedIn={true}
           ></ProtectedRoute>
           <ProtectedRoute exact path='/movies' loggedIn={isLoggedIn} component={Movies}
-            openBurgerMenu={handleBurgerMenu} searchMovies={searchMovies} isLoggedIn={true} isLoading={isLoading} onLike={handleLike} savedMovies={savedMoviesArr}>
+            openBurgerMenu={handleBurgerMenu} searchMovies={searchMovies} isLoggedIn={true} isLoading={preloaderState} onLike={handleLike} savedMovies={savedMoviesArr}>
 
           </ProtectedRoute>
           <ProtectedRoute path='/saved-movies' loggedIn={isLoggedIn} component={SavedMovies}
-            openBurgerMenu={handleBurgerMenu} searchMovies={searchMovies} isLoggedIn={true} savedMovies={savedMoviesArr} onLike={handleLike}
+            openBurgerMenu={handleBurgerMenu} searchMovies={searchMovies} isLoggedIn={true} savedMoviesArr={savedMoviesArr} onLike={handleLike}
           ></ProtectedRoute>
 
           <Route path='*'>

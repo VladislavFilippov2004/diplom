@@ -17,7 +17,6 @@ function SearchForm(props) {
     evt.preventDefault();
     props.onSearch(inputRef.current.value, shortSwitchState);
   }
-
   React.useEffect(() => {
     props.onSearch(inputRef.current.value, shortSwitchState)
   }, [shortSwitchState])
